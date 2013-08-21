@@ -30,6 +30,7 @@ import java.util.Map;
 
 import com.sk89q.worldedit.blocks.BaseBlock;
 import com.sk89q.worldedit.data.DataException;
+import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.schematic.SchematicFormat;
 
 /**
@@ -260,11 +261,24 @@ public class CuboidClipboard {
      * @param editSession
      */
     public void copy(EditSession editSession) {
+    	copy(editSession, null);
+    }
+
+    /**
+     * Copy to the clipboard.
+     *
+     * @param editSession
+     */
+    public void copy(EditSession editSession, Region selection) {
         for (int x = 0; x < size.getBlockX(); ++x) {
             for (int y = 0; y < size.getBlockY(); ++y) {
                 for (int z = 0; z < size.getBlockZ(); ++z) {
-                    data[x][y][z] =
-                            editSession.getBlock(new Vector(x, y, z).add(getOrigin()));
+                    if (selection != null && !selection.contains(new Vector(x, y, z).add(origin))) {
+                    	data[x][y][z] = new BaseBlock(0);
+                    	continue;
+                    }
+                    
+                    data[x][y][z] = editSession.getBlock(new Vector(x, y, z).add(getOrigin()));
                 }
             }
         }
@@ -306,7 +320,6 @@ public class CuboidClipboard {
                     if (noAir && data[x][y][z].isAir()) {
                         continue;
                     }
-
                     editSession.setBlock(new Vector(x, y, z).add(pos), data[x][y][z]);
                 }
             }

@@ -1816,6 +1816,10 @@ public class EditSession {
                     BaseBlock block = getBlock(new Vector(x, y, z));
 
                     if (!block.isAir() || copyAir) {
+                    	if (!region.contains(new Vector(x, y, z))) {
+                    		continue;
+                    	}
+                    	
                         for (int i = 1; i <= count; ++i) {
                             Vector pos = new Vector(x + xs * dir.getBlockX()
                                     * i, y + ys * dir.getBlockY() * i, z + zs

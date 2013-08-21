@@ -66,7 +66,7 @@ public class ClipboardCommands {
         CuboidClipboard clipboard = new CuboidClipboard(
                 max.subtract(min).add(Vector.ONE),
                 min, min.subtract(pos));
-        clipboard.copy(editSession);
+        clipboard.copy(editSession, region);
         if (args.hasFlag('e')) {
             for (LocalEntity entity : player.getWorld().getEntities(region)) {
                 clipboard.storeEntity(entity);
@@ -109,7 +109,7 @@ public class ClipboardCommands {
         CuboidClipboard clipboard = new CuboidClipboard(
                 max.subtract(min).add(Vector.ONE),
                 min, min.subtract(pos));
-        clipboard.copy(editSession);
+        clipboard.copy(editSession, region);
         if (args.hasFlag('e')) {
             LocalEntity[] entities = world.getEntities(region);
             for (LocalEntity entity : entities) {
