@@ -328,27 +328,6 @@ public class CuboidClipboard {
         }
     }
 
-    /**
-     * Copies blocks to the clipboard.
-     *
-     * @param editSession The EditSession from which to take the blocks
-     * @param region A region that further constrains which blocks to take.
-     */
-    public void copy(EditSession editSession, Region region) {
-        for (int x = 0; x < size.getBlockX(); ++x) {
-            for (int y = 0; y < size.getBlockY(); ++y) {
-                for (int z = 0; z < size.getBlockZ(); ++z) {
-                    final Vector pt = new Vector(x, y, z).add(getOrigin());
-                    if (region.contains(pt)) {
-                        data[x][y][z] = editSession.getBlock(pt);
-                    } else {
-                        data[x][y][z] = null;
-                    }
-                }
-            }
-        }
-    }
-
     public void paste(EditSession editSession, Vector newOrigin, boolean noAir)
             throws MaxChangedBlocksException {
         paste(editSession, newOrigin, noAir, false);
